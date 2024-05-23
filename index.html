@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MaintainX-CHONG LI</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      :root {
+        --blue: #1887fc;
+        --white: #ffffff;
+        --black: #1a1a1a;
+        --green: #01c88c;
+        --orange: #ffaa2b;
+        --red: #ff3835;
+        --gray: gray;
+        --fontFamily: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+          Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, emoji, "Segoe UI Emoji",
+          "Segoe UI Symbol";
+      }
+      html {
+        font-family: var(--fontFamily);
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        cursor: pointer;
+        transition: color 0.2s linear;
+      }
+      a:hover {
+        font-weight: 500;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+      }
+      ul,
+      ol {
+        margin: 0;
+        padding-left: 16px;
+      }
+      label {
+        display: block;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+      .sidebar {
+        background-color: var(--blue);
+        padding: 16px;
+      }
+      .sidebar ul {
+        list-style: none;
+        margin: 16px 0 0;
+        padding-left: 0;
+      }
+      .sidebar li {
+        margin-top: 16px;
+      }
+      .sidebar a {
+        color: var(--white);
+        text-decoration: underline;
+      }
+      .logo {
+        height: auto;
+        width: 100%;
+      }
+      .content {
+        background-color: var(--white);
+        padding: 16px;
+      }
+      .table th,
+      .table td {
+        padding: 0 16px 16px 0;
+      }
+      .table th {
+        text-align: left;
+      }
+      .table a {
+        text-decoration: underline;
+      }
+      .done {
+        color: var(--gray);
+      }
+      .details > * {
+        margin-top: 16px;
+      }
+      .details-name {
+        font-size: 18px;
+        font-weight: normal;
+      }
+      .form {
+        margin-top: 16px;
+      }
+      .form-row {
+        display: grid;
+        gap: 8px;
+        margin-top: 16px;
+        max-width: 400px;
+      }
+      .form-button {
+        margin-top: 16px;
+      }
+      .form-error {
+        color: var(--green);
+      }
+      .assignee {
+        margin-top: 8px;
+      }
+      .assignee-inner {
+        display: flex;
+        gap: 16px;
+      }
+      .button {
+        background-color: var(--blue);
+        border: 0;
+        color: #fff;
+        padding: 8px 32px 8px 24px;
+      }
+      .button:hover {
+        background-color: var(--gray);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const WORK_ORDERS = [
+        { id: 1, name: "Unfreeze Frozen Morty", status: "OPEN", assigneeIds: [] },
+        { id: 2, name: "Clean Cat Morty's litterbox", status: "OPEN", assigneeIds: [3] },
+        { id: 3, name: "Walk Dog Morty around the block", status: "OPEN", assigneeIds: [1, 4] },
+        { id: 4, name: "Hammer nails", status: "OPEN", assigneeIds: [8] },
+        { id: 5, name: "Land on Earth", status: "CLOSED", assigneeIds: [1] },
+        { id: 6, name: "Freeze Morty", status: "CLOSED", assigneeIds: [5] },
+      ];
+
+      const USERS = [
+        { id: 9, name: "Pickle Morty", email: "letsmarinate@mortys.com" },
+        { id: 2, name: "Banana Morty", email: "slippery@mortys.com" },
+        { id: 3, name: "Cat Morty", email: "meow@mortys.com" },
+        { id: 8, name: "Hammerhead Morty", email: "hammertime@mortys.com" },
+        { id: 5, name: "Evil Morty", email: "666@mortys.com" },
+        { id: 4, name: "Dog Morty", email: "dawg@mortys.com" },
+        { id: 6, name: "Frozen Morty", email: "letitgo@mortys.com" },
+        { id: 1, name: "Alien Morty", email: "alien@mortys.com" },
+        { id: 7, name: "Genius Morty", email: "rick@mortys.com" },
+      ];
+
+      const humanReadableStatus = {
+        OPEN: "Open",
+        CLOSED: "DONE",
+      };
+
+      function Logo() {
+        return (
+          <div className="logo">
+            <svg viewBox="0 0 368 55" xmlns="http://www.w3.org/2000/svg">
+              <g fill="none" fillRule="evenodd">
+                <path
+                  d="M88.776 38.376h-1.512c-1.296 0-2.604.06-3.924.18-1.32.12-2.496.348-3.528.684-1.032.336-1.884.828-2.556 1.476-.672.648-1.008 1.5-1.008 2.556 0 .672.156 1.248.468 1.728.312.48.708.864 1.188 1.152a5.04 5.04 0 0 0 1.656.612c.624.12 1.224.18 1.8.18 2.4 0 4.236-.66 5.508-1.98 1.272-1.32 1.908-3.108 1.908-5.364v-1.224zM67.104 23.04c2.112-2.016 4.572-3.528 7.38-4.536a25.287 25.287 0 0 1 8.604-1.512c3.024 0 5.58.372 7.668 1.116 2.088.744 3.78 1.896 5.076 3.456 1.296 1.56 2.244 3.528 2.844 5.904.6 2.376.9 5.196.9 8.46V54h-10.8v-3.816h-.216c-.912 1.488-2.292 2.64-4.14 3.456-1.848.816-3.852 1.224-6.012 1.224-1.44 0-2.928-.192-4.464-.576a13.075 13.075 0 0 1-4.212-1.872c-1.272-.864-2.316-2.016-3.132-3.456-.816-1.44-1.224-3.216-1.224-5.328 0-2.592.708-4.68 2.124-6.264 1.416-1.584 3.24-2.808 5.472-3.672 2.232-.864 4.716-1.44 7.452-1.728 2.736-.288 5.4-.432 7.992-.432v-.576c0-1.776-.624-3.084-1.872-3.924-1.248-.84-2.784-1.26-4.608-1.26-1.68 0-3.3.36-4.86 1.08-1.56.72-2.892 1.584-3.996 2.592l-5.976-6.408zm53.872-16.344c0 .912-.18 1.764-.54 2.556a6.595 6.595 0 0 1-1.44 2.052 6.639 6.639 0 0 1-2.16 1.368 7.012 7.012 0 0 1-2.628.504c-1.92 0-3.528-.636-4.824-1.908-1.296-1.272-1.944-2.796-1.944-4.572 0-.864.168-1.692.504-2.484a5.89 5.89 0 0 1 1.44-2.052 7.795 7.795 0 0 1 2.16-1.404 6.526 6.526 0 0 1 2.664-.54c.912 0 1.788.168 2.628.504.84.336 1.56.792 2.16 1.368.6.576 1.08 1.26 1.44 2.052.36.792.54 1.644.54 2.556zM108.304 54V18.144h11.808V54h-11.808zm44.512 0V34.416a15.88 15.88 0 0 0-.252-2.88c-.168-.912-.444-1.716-.828-2.412a4.294 4.294 0 0 0-1.62-1.656c-.696-.408-1.572-.612-2.628-.612s-1.98.204-2.772.612a5.609 5.609 0 0 0-1.98 1.692 7.685 7.685 0 0 0-1.188 2.484 10.69 10.69 0 0 0-.396 2.916V54h-11.88V18.144h11.448v4.968h.144c.432-.768.996-1.524 1.692-2.268a10.158 10.158 0 0 1 2.448-1.908c.936-.528 1.956-.96 3.06-1.296a12.055 12.055 0 0 1 3.528-.504c2.4 0 4.44.432 6.12 1.296 1.68.864 3.036 1.98 4.068 3.348 1.032 1.368 1.776 2.94 2.232 4.716a21.35 21.35 0 0 1 .684 5.328V54h-11.88zm33.424-27v13.68c0 1.68.324 2.94.972 3.78.648.84 1.812 1.26 3.492 1.26.576 0 1.188-.048 1.836-.144.648-.096 1.188-.24 1.62-.432l.144 8.64c-.816.288-1.848.54-3.096.756a21.915 21.915 0 0 1-3.744.324c-2.4 0-4.416-.3-6.048-.9-1.632-.6-2.94-1.464-3.924-2.592-.984-1.128-1.692-2.472-2.124-4.032-.432-1.56-.648-3.3-.648-5.22V27h-5.76v-8.856h5.688V8.712h11.592v9.432h8.424V27h-8.424zm34.936 11.376h-1.512c-1.296 0-2.604.06-3.924.18-1.32.12-2.496.348-3.528.684-1.032.336-1.884.828-2.556 1.476-.672.648-1.008 1.5-1.008 2.556 0 .672.156 1.248.468 1.728.312.48.708.864 1.188 1.152a5.04 5.04 0 0 0 1.656.612c.624.12 1.224.18 1.8.18 2.4 0 4.236-.66 5.508-1.98 1.272-1.32 1.908-3.108 1.908-5.364v-1.224zM199.504 23.04c2.112-2.016 4.572-3.528 7.38-4.536a25.287 25.287 0 0 1 8.604-1.512c3.024 0 5.58.372 7.668 1.116 2.088.744 3.78 1.896 5.076 3.456 1.296 1.56 2.244 3.528 2.844 5.904.6 2.376.9 5.196.9 8.46V54h-10.8v-3.816h-.216c-.912 1.488-2.292 2.64-4.14 3.456-1.848.816-3.852 1.224-6.012 1.224-1.44 0-2.928-.192-4.464-.576a13.075 13.075 0 0 1-4.212-1.872c-1.272-.864-2.316-2.016-3.132-3.456-.816-1.44-1.224-3.216-1.224-5.328 0-2.592.708-4.68 2.124-6.264 1.416-1.584 3.24-2.808 5.472-3.672 2.232-.864 4.716-1.44 7.452-1.728 2.736-.288 5.4-.432 7.992-.432v-.576c0-1.776-.624-3.084-1.872-3.924-1.248-.84-2.784-1.26-4.608-1.26-1.68 0-3.3.36-4.86 1.08-1.56.72-2.892 1.584-3.996 2.592l-5.976-6.408zm53.872-16.344c0 .912-.18 1.764-.54 2.556a6.595 6.595 0 0 1-1.44 2.052 6.639 6.639 0 0 1-2.16 1.368 7.012 7.012 0 0 1-2.628.504c-1.92 0-3.528-.636-4.824-1.908-1.296-1.272-1.944-2.796-1.944-4.572 0-.864.168-1.692.504-2.484a5.89 5.89 0 0 1 1.44-2.052 7.795 7.795 0 0 1 2.16-1.404 6.526 6.526 0 0 1 2.664-.54c.912 0 1.788.168 2.628.504.84.336 1.56.792 2.16 1.368.6.576 1.08 1.26 1.44 2.052.36.792.54 1.644.54 2.556zM240.704 54V18.144h11.808V54h-11.808zm44.512 0V34.416a15.88 15.88 0 0 0-.252-2.88c-.168-.912-.444-1.716-.828-2.412a4.294 4.294 0 0 0-1.62-1.656c-.696-.408-1.572-.612-2.628-.612s-1.98.204-2.772.612a5.609 5.609 0 0 0-1.98 1.692 7.685 7.685 0 0 0-1.188 2.484 10.69 10.69 0 0 0-.396 2.916V54h-11.88V18.144h11.448v4.968h.144c.432-.768.996-1.524 1.692-2.268a10.158 10.158 0 0 1 2.448-1.908c.936-.528 1.956-.96 3.06-1.296a12.055 12.055 0 0 1 3.528-.504c2.4 0 4.44.432 6.12 1.296 1.68.864 3.036 1.98 4.068 3.348 1.032 1.368 1.776 2.94 2.232 4.716a21.35 21.35 0 0 1 .684 5.328V54h-11.88zM47.917 54.115l.298-36.965h-.224L29.537 54.115 11.942 17.15h-.224l.298 36.965H0V1.877h18.137l12.016 33.497h.299L41.946 1.877H60.38v52.238z"
+                  fill="#FFF"
+                />
+                <g fillRule="nonzero">
+                  <path
+                    d="M367.582 3.202c-.21-.43-.651-.702-1.136-.702h-20.152a1.27 1.27 0 0 0-.984.465l-20.152 24.762a1.222 1.222 0 0 0 0 1.546l20.152 24.762c.24.294.602.465.984.465h20.152c.485 0 .925-.273 1.136-.702.209-.428.15-.938-.152-1.31L347.907 28.5 367.43 4.511c.303-.37.36-.88.152-1.31z"
+                    fill="#001E40"
+                  />
+                  <path
+                    d="M327.375 2.965a1.26 1.26 0 0 0-.979-.465h-20.065c-.482 0-.922.273-1.13.702-.21.428-.15.938.15 1.31L324.79 28.5l-19.439 23.989c-.3.37-.36.88-.15 1.31.208.428.648.701 1.13.701h20.065c.381 0 .742-.171.98-.465L347.893 28.5 327.375 2.965z"
+                    fill="#FFF"
+                  />
+                </g>
+              </g>
+            </svg>
+          </div>
+        );
+      }
+
+      function WorkOrderList({ workOrders, onSetRoute }) {
+        return (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workOrders.map((workOrder) => (
+                <tr key={workOrder.id} className={workOrder.status === "CLOSED" ? "done" : ""}>
+                  <td>{workOrder.id}</td>
+                  <td>
+                    <a onClick={() => onSetRoute("details", workOrder.id)}>{workOrder.name}</a>
+                  </td>
+                  <td>{humanReadableStatus[workOrder.status]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
+      }
+
+      function Assignee({ id, onDelete }) {
+        const user = USERS.find((user) => user.id === id);
+        if (!user) {
+          return null;
+        }
+        return (
+          <li className="assignee">
+            <div class="assignee-inner">
+              {user.name}
+              <button type="button" onClick={() => onDelete(id)}>
+                ✗
+              </button>
+            </div>
+          </li>
+        );
+      }
+
+      function WorkOrderDetails({ workOrder, onSetRoute, onChangeWorkOrderStatus }) {
+        if (!workOrder) {
+          return <div>Loading…</div>;
+        }
+        return (
+          <section className="details">
+            <a onClick={() => onSetRoute("list")}>⬅️ Retourner</a>
+            <h1 className="details-id">Work Order #{workOrder.id}</h1>
+            <h1 className="details-name">
+              <i>Title:</i> {workOrder.name}
+            </h1>
+            <div>
+              <i>Status:</i> {humanReadableStatus[workOrder.status]}
+            </div>
+            <div>
+              <i>Assignees:</i>
+              {workOrder.assigneeIds.length > 0 ? (
+                <ul>
+                  {workOrder.assigneeIds.map((id, i) => (
+                    <Assignee key={i} id={id} />
+                  ))}
+                </ul>
+              ) : (
+                <div>No one is assigned yet..</div>
+              )}
+            </div>
+            <button
+              className="button details-button"
+              type="button"
+              onClick={() =>
+                onChangeWorkOrderStatus(
+                  workOrder.id,
+                  workOrder.status === "OPEN" ? "CLOSED" : "CLOSED",
+                )
+              }
+            >
+              {workOrder.status === "CLOSED" ? "Reopen the work order" : "Close the work order"}
+            </button>
+          </section>
+        );
+      }
+
+      function WorkOrderForm({ workOrders, onCreateWorkOrder }) {
+        const [name, setName] = React.useState("");
+        const [assigneeIds, setAssigneeIds] = React.useState([]);
+        const [errorText, setErrorText] = React.useState("");
+
+        function handleSubmit(ev) {
+          ev.preventDefault();
+          if (!name) {
+            setErrorText("Name is required");
+            return;
+          }
+          const id = workOrders.length + 1;
+          onCreateWorkOrder({ assigneeIds, id, name, status: "OPEN" });
+          setName("");
+          setAssigneeIds([]);
+          setErrorText("");
+        }
+
+        function handleChangeName(ev) {
+          setName(ev.target.value);
+        }
+
+        function handleRemoveAssignee(id) {
+          setAssigneeIds((prev) => prev.filter((aId) => aId !== id));
+        }
+
+        function handlePickAssignee(ev) {
+          setAssigneeIds((prev) => [...prev, Number(ev.target.value)]);
+        }
+
+        return (
+          <section>
+            <h3>New Work Orders</h3>
+            <form className="form" onSubmit={handleSubmit}>
+              {errorText && <div className="form-error">{errorText}</div>}
+              <div className="form-row">
+                <label>Name</label>
+                <input type="text" value={name} onChange={handleChangeName} />
+              </div>
+              <div className="form-row">
+                <label>Assignees</label>
+                {assigneeIds.length > 0 && (
+                  <ul>
+                    {assigneeIds.map((id, i) => (
+                      <Assignee key={i} id={id} onDelete={handleRemoveAssignee} />
+                    ))}
+                  </ul>
+                )}
+                <select value="none" onChange={handlePickAssignee}>
+                  <option key="none">Pick an Asignee</option>
+                  {USERS.map((u) => (
+                    <option key={u.id} value={u.id}>
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button className="button form-button" type="submit">
+                Create
+              </button>
+            </form>
+          </section>
+        );
+      }
+
+      function Sidebar({ onSetRoute }) {
+        return (
+          <nav className="sidebar">
+            <a onClick={() => onSetRoute("home")}>
+              <Logo />
+            </a>
+            <ul>
+              <li>
+                <a onClick={() => onSetRoute("form")}>Create Work Order</a>
+              </li>
+              <li>
+                <a onClick={() => onSetRoute("list")}>View Work-Orders</a>
+              </li>
+            </ul>
+          </nav>
+        );
+      }
+
+      function App() {
+        const [route, setRoute] = React.useState("list");
+        const [workOrders, setWorkOrders] = React.useState(WORK_ORDERS);
+        const [selectedWorkOrderId, setSelectedWorkOrderId] = React.useState(null);
+
+        const handleSetWorkOrders = (_workOrders) => {
+          const sortedWorkOrders = _workOrders.sort((a, b) => {
+            if (a.status === b.status) {
+              return a.id - b.id;
+            }
+            return a.status === "OPEN" ? -1 : 1;
+          });
+          setWorkOrders(sortedWorkOrders);
+        };
+
+        function handleSetRoute(route, workOrderId) {
+          if (workOrderId) {
+            setSelectedWorkOrderId(workOrderId);
+          }
+          setRoute(route);
+        }
+
+        function handleChangeWorkOrderStatus(workOrderId, status) {
+          const newWorkOrders = [...workOrders];
+          const index = workOrders.findIndex((workOrder) => workOrder.id === workOrderId);
+          newWorkOrders[index].status = status;
+          handleSetWorkOrders(newWorkOrders);
+        }
+
+        function handleCreateWorkOrder(workOrder) {
+          handleSetWorkOrders([
+            ...workOrders,
+            { ...workOrder, name: `#${workOrder.id} ${workOrder.name}` },
+          ]);
+          setRoute("list");
+        }
+
+        function renderRoute() {
+          switch (route) {
+            case "details": {
+              const selectedWorkOrder = workOrders.find(
+                (workOrder) => workOrder.id === selectedWorkOrderId,
+              );
+              return (
+                <WorkOrderDetails
+                  workOrder={selectedWorkOrder}
+                  onSetRoute={handleSetRoute}
+                  onChangeWorkOrderStatus={handleChangeWorkOrderStatus}
+                />
+              );
+            }
+            case "form": {
+              return (
+                <WorkOrderForm workOrders={workOrders} onCreateWorkOrder={handleCreateWorkOrder} />
+              );
+            }
+            case "list":
+              return <WorkOrderList workOrders={workOrders} onSetRoute={handleSetRoute} />;
+            default:
+              return null;
+          }
+        }
+
+        return (
+          <main className="grid">
+            <Sidebar onSetRoute={handleSetRoute} />
+            <article className="content">{renderRoute()}</article>
+          </main>
+        );
+      }
+
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
