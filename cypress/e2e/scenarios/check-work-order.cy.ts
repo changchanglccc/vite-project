@@ -4,7 +4,6 @@ describe('when check the work order in details', () => {
     const homePage: HomePage = new HomePage();
 
     beforeEach(() => {
-        // since we already set the baseUrl in cypress.config.ts file
         cy.visit('/');
     });
 
@@ -52,6 +51,29 @@ describe('when check the work order in details', () => {
                         homePage.workOrderDetailsStatusSwitchButton.should('contain', 'Close the work order');
                     });
                 });
+
+                describe('when click on the status switch button', () => {
+                    beforeEach(() => {
+                        homePage.workOrderDetailsStatusSwitchButton.click();
+                    });
+
+                    it('should update the status of work order', () => {
+                        cy.get('article section div').eq(0).should('contain', 'Status: DONE');
+                    });
+
+                    describe('then when click on the return button', () => {
+                        it('should return back to the view work orders page '
+                            + 'and the status of 2nd work order should be DONE', () => {
+                            homePage.workOrderDetailsReturnButton.click();
+                            homePage.workOrderDetailsSection.should('not.exist');
+                            homePage.articleTableRows.should('exist');
+                            // here has to set to test line 4 based on current code base
+                            homePage.articleTableRows.eq(3).find('td').eq(2).should('contain', 'DONE');
+                        });
+
+                    });
+                });
+
             });
         });
     });
