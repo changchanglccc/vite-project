@@ -3,8 +3,8 @@ import allureWriter from "@shelex/cypress-allure-plugin/writer";
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:5173',
-    video: false,
+    baseUrl: 'https://todo.qacart.com',
+    video: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       allureWriter(on, config);
@@ -14,7 +14,9 @@ export default defineConfig({
     env: {
       allure: true,
       allureAttachRequests: true,
-      allureAddVideoOnPass: true
+      allureAddVideoOnPass: true,
+      allureResultsPath: './allure-results',
+      allureReuseAfterSpec: true
     }
   }
 });

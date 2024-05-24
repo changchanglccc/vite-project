@@ -4,7 +4,7 @@ describe('when create a new work order', () => {
     const homePage: HomePage = new HomePage();
 
     beforeEach(() => {
-        cy.visit('/');
+        cy.visit('http://localhost:5173/');
     });
 
     describe('when click "Create Work Order"', () => {

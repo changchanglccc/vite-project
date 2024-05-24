@@ -4,7 +4,7 @@ describe('when check the work order in details', () => {
     const homePage: HomePage = new HomePage();
 
     beforeEach(() => {
-        cy.visit('/');
+        cy.visit('http://localhost:5173/');
     });
 
     // randomly selected the 2nd order with Open Status

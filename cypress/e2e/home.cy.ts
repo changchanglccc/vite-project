@@ -5,7 +5,7 @@ describe('MaintainX QA-Take-Home Project home page', () => {
 
     beforeEach(() => {
         // since we already set the baseUrl in cypress.config.ts file
-        cy.visit('/');
+        cy.visit('http://localhost:5173/');
     });
 
     it('should have a grid', () => {
