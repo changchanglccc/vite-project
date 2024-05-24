@@ -1,10 +1,9 @@
 /**
- * Because i want to show allure reporting by doing api calls in e2e test, easy and fast.
+ * Because i want to show how to do api calls in e2e test
+ * (api call tests are faster than UI tests, sometimes will suggest to use api).
+ *
  * you can also visit https://todo.qacart.com/signup directly, there is a form for registering
- *
  * This e2e uses a third party url, and is to add a todo
- *
- * More info could be found in Allure report
  */
 
 import { faker } from '@faker-js/faker';
