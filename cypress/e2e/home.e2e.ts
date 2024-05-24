@@ -46,4 +46,28 @@ export class HomePage {
     get workOrderDetailsStatusSwitchButton(): Cypress.Chainable<JQuery> {
         return cy.get('article section button').eq(1);
     }
+
+    get newWorkOrderTitle(): Cypress.Chainable<JQuery> {
+        return cy.get('article section h3');
+    }
+
+    get newWorkOrderForm(): Cypress.Chainable<JQuery> {
+        return cy.get('article section form');
+    }
+
+    get newWorkOrderFormLabels(): Cypress.Chainable<JQuery> {
+        return cy.get('article section form label');
+    }
+
+    get newWorkOrderFormInput(): Cypress.Chainable<JQuery> {
+        return cy.get('article section form input');
+    }
+
+    get newWorkOrderFormDropdown(): Cypress.Chainable<JQuery> {
+        return cy.get('article section form select');
+    }
+
+    get newWorkOrderFormButton(): Cypress.Chainable<JQuery> {
+        return cy.get('article section form .button');
+    }
 }
