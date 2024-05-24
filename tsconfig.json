@@ -5,7 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["cypress", "node"],
+    "types": ["cypress", "node", "@shelex/cypress-allure-plugin"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
