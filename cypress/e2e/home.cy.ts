@@ -14,7 +14,7 @@ describe('MaintainX QA-Take-Home Project home page', () => {
 
     describe('left navigator section', () => {
         it('should be visible', () => {
-            homePage.navigatorSection.should('be.visible');
+            homePage.navigator.should('be.visible');
         });
 
         it('should include two list items', () => {
@@ -32,7 +32,7 @@ describe('MaintainX QA-Take-Home Project home page', () => {
 
     describe('right articles section', () => {
         it('should be visible', () => {
-            homePage.articleSection.should('be.visible');
+            homePage.article.should('be.visible');
         });
 
         it('should include 6 table rows', () => {

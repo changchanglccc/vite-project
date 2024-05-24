@@ -3,7 +3,7 @@ export class HomePage {
         return cy.get('main.grid');
     }
 
-    get navigatorSection(): Cypress.Chainable<JQuery> {
+    get navigator(): Cypress.Chainable<JQuery> {
         return cy.get('nav');
     }
 
@@ -15,11 +15,35 @@ export class HomePage {
         return cy.get('nav ul li a');
     }
 
-    get articleSection(): Cypress.Chainable<JQuery> {
+    get article(): Cypress.Chainable<JQuery> {
         return cy.get('article');
     }
 
     get articleTableRows(): Cypress.Chainable<JQuery> {
         return cy.get('article tbody tr');
+    }
+
+    get workOrderDetailsSection(): Cypress.Chainable<JQuery> {
+        return cy.get('article section');
+    }
+
+    get workOrderDetailsReturnButton(): Cypress.Chainable<JQuery> {
+        return cy.get('article section a');
+    }
+
+    get workOrderDetailsDetailID(): Cypress.Chainable<JQuery> {
+        return cy.get('article section h1.details-id');
+    }
+
+    get workOrderDetailsDetailName(): Cypress.Chainable<JQuery> {
+        return cy.get('article section h1.details-name');
+    }
+
+    get workOrderDetailsAssignees(): Cypress.Chainable<JQuery> {
+        return cy.get('article section div.assignee-inner');
+    }
+
+    get workOrderDetailsStatusSwitchButton(): Cypress.Chainable<JQuery> {
+        return cy.get('article section button').eq(1);
     }
 }
