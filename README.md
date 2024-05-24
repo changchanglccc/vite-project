@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## How to run the application locally
 
-Currently, two official plugins are available:
+- `npm install`
+- `npm run dev`
+- visit on `http://localhost:5173/`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to run cypress locally
 
-## Expanding the ESLint configuration
+- `npx cypress open --e2e --browser chrome`: to run cypress in head mode and can interact with each e2e tests.
+- `npm cypress run`: to run cypress in headless mode.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## How to generate and visit Allure html report
 
-- Configure the top-level `parserOptions` property like this:
+- make sure run `npx cypress run` first and let it generate files in `/allure-results` folder
+- `allure serve allure-results`, then you will be redirected to a html page to check the beautiful Allure report.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+If you cannot run `allure serve allure-results`, install allure locally at first: `brew install allure`
+Attention: install brew itself could takes time.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Thanks!
