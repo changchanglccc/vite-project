@@ -3,17 +3,25 @@ on:
   push:
     branches: [main]
 jobs:
-  test:
-    runs-on: ubuntu-lastest
+  cypress-run:
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up node
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Cypress e2e tests
-        run: npx cypress run
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          # Disable running of tests within install job
+          runTests: false
+          build: npm run build
+          start: npm start
