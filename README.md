@@ -9,7 +9,7 @@
 ## How to run cypress locally
 
 - `npx cypress open --e2e --browser chrome`: to run cypress in head mode and can interact with each e2e tests.
-- `npm cypress run`: to run cypress in headless mode.
+- `npx cypress run`: to run cypress in headless mode.
 
 ## How to generate and visit Allure html report
 
