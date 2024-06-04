@@ -34,4 +34,8 @@
 //       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
 //     }
 //   }
-// }
+//
+
+Cypress.Commands.add('dataTest', value => {
+  return cy.get(`[data-test="${value}"]`)
+});

@@ -22,12 +22,12 @@ describe('MaintainX QA-Take-Home Project home page', () => {
         });
 
         it('should have the first anchor element named "Create Work Order“', () => {
-            cy.get('[data-test="create-work-order"]').should('contain', 'Create Work Order');
+            cy.dataTest('create-work-order').should('contain', 'Create Work Order');
             // homePage.navigatorListItems.eq(0).should('contain', 'Create Work Order');
         });
 
         it('should have the second anchor element named "View Work-Orders“', () => {
-            cy.get('[data-test="view-work-orders"]').should('contain', 'View Work-Orders');
+            cy.dataTest('view-work-orders').should('contain', 'View Work-Orders');
             // homePage.navigatorListItems.eq(1).should('contain', 'View Work-Orders');
         });
     });
