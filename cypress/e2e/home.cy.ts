@@ -21,11 +21,6 @@ describe('MaintainX QA-Take-Home Project home page', () => {
             homePage.navigatorList.should('have.length', 2);
         });
 
-        // should failed
-        it('should include two list items', () => {
-            homePage.navigatorList.should('have.length', 10);
-        });
-
         it('should have the first anchor element named "Create Work Order“', () => {
             homePage.navigatorListItems.eq(0).should('contain', 'Create Work Order');
         });
