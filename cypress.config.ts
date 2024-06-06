@@ -10,5 +10,12 @@ export default defineConfig({
         resultsDir: './allure-results'
       });
     }
-  }
+  },
+  // // default
+  // viewportWidth: 1000,
+  // viewportHeight: 660,
+
+  // // iphone 14 pro max
+  // viewportWidth: 430,
+  // viewportHeight: 932
 });

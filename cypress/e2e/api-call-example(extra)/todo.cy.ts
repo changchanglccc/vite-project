@@ -8,17 +8,35 @@
 
 import { faker } from '@faker-js/faker';
 
-it.only('should be able to add a todo', () => {
-    // a third party url
-    cy.visit('https://todo.qacart.com/signup');
-    // fill the form
-    cy.get('[data-testid="first-name"]').type(faker.person.firstName());
-    cy.get('[data-testid="last-name"]').type(faker.person.lastName());
-    cy.get('[data-testid="email"]').type(faker.internet.email());
-    cy.get('[data-testid="password"]').type('Test1234');
-    cy.get('[data-testid="confirm-password"]').type('Test1234');
+it('should be able to add a todo', () => {
+    // // a third party url
+    // cy.visit('https://todo.qacart.com/signup');
+    // // fill the form
+    // cy.get('[data-testid="first-name"]').type(faker.person.firstName());
+    // cy.get('[data-testid="last-name"]').type(faker.person.lastName());
+    // cy.get('[data-testid="email"]').type(faker.internet.email());
+    // cy.get('[data-testid="password"]').type('Test1234');
+    // cy.get('[data-testid="confirm-password"]').type('Test1234');
 
-    cy.get('[data-testid="submit"]').click();
+    // cy.get('[data-testid="submit"]').click();
+
+    //api call:
+    cy.request({
+        method: 'POST',
+        url: 'https://todo.qacart.com/api/v1/users/register',
+        body: {
+            firstName: faker.person.firstName(),
+            lastName: faker.person.lastName(),
+            email: faker.internet.email(),
+            password: 'Test1234'
+        }
+    }).should(response => {
+        expect(response.status).to.equal(201);
+        expect(response.body).have.property('userID');
+        expect(response.body).have.property('firstName');
+    });
+
+    cy.visit('https://todo.qacart.com/todo');
 
     cy.get('[data-testid="welcome"]').should('be.visible');
     cy.get('[data-testid="add"]').click();

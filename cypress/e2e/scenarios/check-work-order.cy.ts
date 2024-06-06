@@ -78,6 +78,55 @@ describe('when check the work order in details', () => {
         });
     });
 
+    // another style:
+    // describe('when select a work order with Open status', () => {
+    //     describe('when select the 2nd work order from home page', () => {
+    //         it('should exist and the status should be Open', () => {
+    //             homePage.articleTableRows.eq(1).should('exist');
+    //             homePage.articleTableRows.eq(1).find('td').eq(2).should('contain', 'Open');
+    //         });
+
+    //         describe('when click on the 2nd work order name', () => {
+    //             beforeEach(() => {
+    //                 homePage.articleTableRows.eq(1).find('td').eq(1).click();
+    //             });
+
+    //             it('should make a details section visible', () => {
+    //                 homePage.workOrderDetailsSection.should('be.visible');
+    //             });
+
+    //             describe('when check detail section', () => {
+    //                 it('should contain correct contents', () => {
+    //                     homePage.workOrderDetailsReturnButton.should('contain', '⬅️ Retourner');
+    //                     homePage.workOrderDetailsDetailID.should('contain', 'Work Order #2');
+    //                     homePage.workOrderDetailsDetailName.should('contain', 'Title: Clean Cat Morty\'s litterbox');
+    //                     cy.get('article section div').eq(0).should('contain', 'Status: Open');
+    //                     cy.get('article section div').eq(1).should('contain', 'Assignees');
+    //                     cy.get('article section div.assignee-inner').should('contain', 'Cat Morty');
+    //                     cy.get('article section div button').should('contain', '✗');
+    //                     homePage.workOrderDetailsStatusSwitchButton.should('contain', 'Close the work order');
+    //                 });
+    //             });
+
+    //             describe('when click on the status switch button', () => {
+    //                 beforeEach(() => {
+    //                     homePage.workOrderDetailsStatusSwitchButton.click();
+    //                 });
+
+    //                 it('should update the status of work order and update button text', () => {
+    //                     cy.get('article section div').eq(0).should('contain', 'Status: DONE');
+    //                     homePage.workOrderDetailsStatusSwitchButton.should('contain', 'Reopen the work order');
+
+    //                     // //should fail:
+    //                     // homePage.workOrderDetailsStatusSwitchButton.should('contain', 'Close the work order');
+    //                 });
+    //             });
+
+    //         });
+    //     });
+    // });
+
     // Attention: Skipped the following part in this demo
     // randomly selected one order with DONE Status, then test same details but Reopen button
+    describe('when select a work order with DONE status', () => {});
 });
