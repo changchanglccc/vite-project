@@ -19,4 +19,8 @@
 If you cannot run `allure serve allure-results`, install allure locally at first: `brew install allure`
 Attention: install brew itself could takes time.
 
+Additional Tips: 
+- Activated Github Actions
+- Aeployed allure report into Github Pages
+
 ## Thanks!
