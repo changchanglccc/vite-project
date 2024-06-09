@@ -30,14 +30,14 @@ jobs:
           start: npm run start
 
       - name: Load test report history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Allure Report with history
-        uses: simple-elf/allure-report-action@v1.9
+        uses: simple-elf/allure-report-action@v1.7
         id: allure-report
         with:
           allure_results: allure-results
@@ -48,5 +48,5 @@ jobs:
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3
         with:
-          PERSONAL_TOKEN: ${{ secrets.TOKEN }}
-          PUBLISH_DIR: allure-history
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: allure-history
