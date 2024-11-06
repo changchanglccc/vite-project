@@ -33,13 +33,6 @@ jobs:
       - name: Verify Cypress Installation
         run: npx cypress verify
 
-      # - name: Run e2e test
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     browser: chrome
-      #     build: npm run build
-      #     start: npm run start
-
       - name: Run Cypress Tests in Parallel with Allure
         uses: cypress-io/github-action@v6
         with:
@@ -72,33 +65,27 @@ jobs:
       - name: Generate Allure Report
         run: allure generate --single-report ./allure-results --cleaen -o ./allure-report
 
+      - name: Load test report history
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report with history
+        uses: simple-elf/allure-report-action@v1.9
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
       - name: Deploy Allure Report to Github Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: allure-history
-
-    # - name: Load test report history
-    #     uses: actions/checkout@v4
-    #     continue-on-error: true
-    #     with:
-    #       ref: gh-pages
-    #       path: gh-pages
-
-    #   - name: Allure Report with history
-    #     uses: simple-elf/allure-report-action@v1.9
-    #     id: allure-report
-    #     with:
-    #       allure_results: allure-results
-    #       gh_pages: gh-pages
-    #       allure_report: allure-report
-    #       allure_history: allure-history
-
-    #   - name: GitHub Pages action
-    #     uses: peaceiris/actions-gh-pages@v4
-    #     with:
-    #       personal_token: ${{ secrets.PERSONAL_TOKEN }}
-    #       publish_dir: allure-history
 
   # cypress-run:
   # runs-on: ubuntu-22.04
