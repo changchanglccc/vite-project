@@ -30,13 +30,16 @@ jobs:
         if: steps.cache-miss.outputs.cache-hit != 'true' # Only install if cache was not found
         run: npm install
 
+      - name: Verify Cypress Installation
+        run: npx cypress verify
+
       - name: Run Cypress Tests in Parallel with Allure
         uses: cypress-io/github-action@v6
         with:
           config: video=false
           parallel: true
           group: "group-${{ matrix.parallel-job }}"
-          command: "cypress run --env allure=true"
+          command: "npx cypress run --env allure=true"
         env:
           CYPRESS_ALLURE_GROUP: "group-${{ matrix.parallel-job }}"
           CYPRESS_ALLURE_RESULT_PATH: "./allure-results"
