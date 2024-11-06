@@ -33,9 +33,19 @@ jobs:
       - name: Verify Cypress Installation
         run: npx cypress verify
 
+      # - name: Run e2e test
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     browser: chrome
+      #     build: npm run build
+      #     start: npm run start
+
       - name: Run Cypress Tests in Parallel with Allure
         uses: cypress-io/github-action@v6
         with:
+          browser: chrome
+          build: npm run build
+          start: npm run start
           config: video=false
           parallel: true
           group: "group-${{ matrix.parallel-job }}"
