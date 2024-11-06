@@ -17,7 +17,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Cache Node Modules
+      - name: Check for Cache
+        id: cache-miss
         uses: actions/cache@v4
         with:
           path: ~/.npm
@@ -26,6 +27,7 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.parallel-job }}
 
       - name: Install dependencies
+        if: steps.cache-miss.outputs.cache-hit != 'true' # Only install if cache was not found
         run: npm install
 
       - name: Run Cypress Tests in Parallel with Allure
