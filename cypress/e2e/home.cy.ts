@@ -1,4 +1,5 @@
 import {HomePage} from './home.e2e';
+import * as allure from "allure-cypress";
 
 describe('MaintainX QA-Take-Home Project home page', () => {
     const homePage: HomePage = new HomePage();
@@ -9,7 +10,14 @@ describe('MaintainX QA-Take-Home Project home page', () => {
     });
 
     it('should have a grid', () => {
-        homePage.grid.should('exist');
+        //make it fail on purpose
+        allure.step('step 1', () => {
+            homePage.grid.should('contain.text', 'should fail!');
+        });
+
+        allure.step('step 2', () => {
+            homePage.grid.should('exist');
+        });
     });
 
     describe('left navigator section', () => {
@@ -18,7 +26,8 @@ describe('MaintainX QA-Take-Home Project home page', () => {
         });
 
         it('should include two list items', () => {
-            homePage.navigatorList.should('have.length', 2);
+            homePage.navigatorList.should('have.length', 5);
+            // homePage.navigatorList.should('have.length', 2);
         });
 
         it('should have the first anchor element named "Create Work Order“', () => {
