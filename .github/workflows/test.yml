@@ -5,9 +5,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        parallel-job: [1, 2, 3]
+    # strategy:
+    #   matrix:
+    #     parallel-job: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,14 +17,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Check for Cache
-        id: cache-miss
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.parallel-job }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.parallel-job }}
+      # - name: Check for Cache
+      #   id: cache-miss
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ matrix.parallel-job }}-${{ hashFiles('package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.parallel-job }}
 
       - name: Install dependencies
         if: steps.cache-miss.outputs.cache-hit != 'true' # Only install if cache was not found
@@ -41,10 +41,10 @@ jobs:
           start: npm run start
           config: video=false
           parallel: true
-          group: "group-${{ matrix.parallel-job }}"
+          # group: "group-${{ matrix.parallel-job }}"
           command: "npx cypress run --env allure=true"
         env:
-          CYPRESS_ALLURE_GROUP: "group-${{ matrix.parallel-job }}"
+          # CYPRESS_ALLURE_GROUP: "group-${{ matrix.parallel-job }}"
           CYPRESS_ALLURE_RESULT_PATH: "./allure-results"
 
   generate-allure-reprot:
@@ -63,7 +63,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Generate Allure Report
-        run: allure generate --single-file ./allure-results --clean -o ./allure-report
+        run: allure generate --single-file allure-results --clean -o allure-report
 
       - name: Load test report history
         uses: actions/checkout@v4
