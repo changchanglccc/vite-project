@@ -4,11 +4,13 @@ import { allureCypress } from "allure-cypress/reporter";
 export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:5173',
-    setupNodeEvents(on) {
+    setupNodeEvents(on, config) {
       // implement node event listeners here
-      allureCypress(on, {
+      allureCypress(on, config, {
         resultsDir: './allure-results'
       });
+
+      return config;
     }
   },
   // // default
