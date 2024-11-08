@@ -24,6 +24,7 @@
     "allure-commandline": "^2.32.0",
     "allure-cypress": "^3.0.6",
     "cypress": "^13.10.0",
+    "cypress-on-fix": "1.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
