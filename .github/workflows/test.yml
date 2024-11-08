@@ -15,7 +15,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Check for Cache
         id: cache-miss
@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.parallel-job }}
 
       - name: Install dependencies
-        if: steps.cache-miss.outputs.cache-hit != 'true' # Only install if cache was not found
+        # if: steps.cache-miss.outputs.cache-hit != 'true' # Only install if cache was not found
         run: npm install
 
       - name: Verify Cypress Installation
